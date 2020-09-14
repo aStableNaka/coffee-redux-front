@@ -1,0 +1,19 @@
+{
+  "name": "coffee-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Index.js",
+  "scripts": {
+    "build": "tsc build ./Index.ts",
+    "build-developer": "",
+    "build-release": "",
+    "start": "node Index.js",
+    "start-dev":""
+  },
+  "author": "Naka",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "tsc": "^1.20150623.0"
+  }
+}

@@ -4,6 +4,6 @@
  */
 export class CoffeeFront {
 	constructor(){
-		import("./DevHead").then()
+		
 	}
 }

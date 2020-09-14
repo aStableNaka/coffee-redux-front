@@ -3,6 +3,7 @@
 - Packges must be escaped when transfering front->back
 - String fields sent to dispatch have a fixed length.
 - String fields that exceed the fixed length will result in an error
+- Packages must be encoded with JWT
 
 # Readme
 Fields with a prefix "!" are not guaranteed to exist.
@@ -50,8 +51,11 @@ The scope field determines the scope of operations for a packet. This is used to
 
 | Number | Name | Description | Front Response | Dispatch Response |
 |--- |--- |--- |--- |--- |
-| 0 | PING | A simple ping request. | Packet(PING_RESPONSE) | Packet(PING_RESPONSE)|
+| 0 | PING | A simple ping request. | PING_RESPONSE | PING_RESPONSE |
 | 1 | PING_RESPONSE | A response to a ping request | ~ | ~ |
+| 100 | UD_REQ_OWNERSHIP | Request ownership of a user's data | UD_100_TRANSFER | UD_100_TRANSFER | 
+| 101 | UD_TRANSFER | Contains userdata for transfering | ~ | ~ |
+| 102 | UD_REVOKE | Revokes a microservice's access to userdata | ~ | ~ |
 
 > Front response: The response from a coffee-front instance
 
@@ -59,10 +63,38 @@ The scope field determines the scope of operations for a packet. This is used to
 
 ## Header Packages
 
-### PING
-#### Header
+### PING (0) Request
+A simple ping request. Sent from a microservice.
+> Header fields
+
 | Identifier | Type | Description |
 |--- |--- |--- |
 | scope | number | 0 |
 | internal | boolean | true |
 | body | boolean | false |
+
+### PING_RESPONSE (1) Response
+> Header fields
+
+| Identifier | Type | Description |
+|--- |--- |--- |
+| scope | number | 1 |
+| internal | boolean | true |
+| body | boolean | false |
+| footerInclude | string[] | ["dt"] |
+
+### UD_REQ_OWNERSHIP (100) Request
+Request userdata ownership.
+> Header fields
+
+| Identifier | Type | Description |
+|--- |--- |--- |
+| scope | number | 100 |
+| internal | boolean | true |
+| body | boolean | false |
+
+> Body fields
+
+| Identifier | Type | Description |
+|--- |--- |--- |
+| endpoint | string | The unique endpoint of a microservice. Dispatch will figure out where the request needs to go. |

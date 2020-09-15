@@ -17,7 +17,8 @@ export type AdminsSchema = Map<string, string>
 
 export type DispatchSchema = {
 	token:string,
-	url:string
+	url:string,
+	timeout:number,
 }
 
 export type ConfigSchema = {

@@ -11,7 +11,7 @@ Commander is a command manager that parses user input and produces a command con
 `Execution soft limiting` is done by placing command contexts into a timed boundless queue.
 
 > Use cases
-> > Limiting the use of a command 
+> - Limiting the use of a command 
 
 `Execution hard limiting` is done by placing command contexts into a bound queue and discarding other action requests until the queue has a free slot.
 

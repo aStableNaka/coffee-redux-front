@@ -1,5 +1,8 @@
 import {ConfigSchema} from "./Config";
 
+/**
+ * Why is the config a ts file? because json files are boring
+ */
 export let config:ConfigSchema = {
 	
 	discord:{

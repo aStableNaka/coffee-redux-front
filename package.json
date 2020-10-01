@@ -8,12 +8,13 @@
     "build-developer": "",
     "build-release": "",
     "start": "node Index.js",
-    "start-dev":""
+    "start-dev": ""
   },
   "author": "Naka",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.3.1",
+    "sanitize": "^2.1.0",
     "tsc": "^1.20150623.0"
   }
 }

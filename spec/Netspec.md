@@ -39,6 +39,7 @@ These elements must be included within the header
 |--- |--- |--- |
 | scope | integer | denotes the scope of operations. Refer to the scope table |
 | internal | boolean | set to true if the request is not made on the behalf of a user. Will alert instances to ignore the next two fields |
+| destination | nodeID string | the intended destination of this request, for routing |
 | user | Snowflake | The ID of the user that requested this operation. |
 | channel | Snowflake | The channel ID in which the operation was requested |
 | body | boolean | true if the package contains a body |
@@ -65,6 +66,18 @@ The scope field determines the scope of operations for a packet. This is used to
 
 ### PING (0) Request
 A simple ping request. Sent from a microservice.
+
+> Example
+```json
+	{
+		"header":{
+			"scope": 0,
+			"internal": true,
+			"body": false
+		}
+	}
+```
+
 > Header fields
 
 | Identifier | Type | Description |
@@ -74,27 +87,91 @@ A simple ping request. Sent from a microservice.
 | body | boolean | false |
 
 ### PING_RESPONSE (1) Response
+
+> Example
+```json
+	{
+		"header":{
+			"scope": 1,
+			"internal": true,
+			"body": false
+		}
+	}
+```
+
 > Header fields
 
 | Identifier | Type | Description |
 |--- |--- |--- |
 | scope | number | 1 |
 | internal | boolean | true |
-| body | boolean | false |
+| body | boolean | true |
 | footerInclude | string[] | ["dt"] |
 
 ### UD_REQ_OWNERSHIP (100) Request
 Request userdata ownership.
+
+> Example
+```json
+	{
+		"header":{
+			"scope": 100,
+			"internal": true,
+			"body": true,
+			"footerInclude": [ "dt" ],
+			"destination": "dispatch"
+		},
+		"body":{
+			"endpoint": "something.url/endpoint"
+		}
+	}
+```
+
+
 > Header fields
 
 | Identifier | Type | Description |
 |--- |--- |--- |
 | scope | number | 100 |
 | internal | boolean | true |
-| body | boolean | false |
+| body | boolean | true |
 
 > Body fields
 
 | Identifier | Type | Description |
 |--- |--- |--- |
-| endpoint | string | The unique endpoint of a microservice. Dispatch will figure out where the request needs to go. |
+| nodeID | string | The destination nodeID of a microservice. Dispatch will figure out where the request needs to go. |
+
+### UD_TRANSFER (101) Request
+Request userdata ownership.
+
+> Example
+```json
+	{
+		"header":{
+			"scope": 101,
+			"internal": true,
+			"body": true,
+			"footerInclude": [ "dt" ],
+			"destination": "nodeID"
+		},
+		"body":{
+			"userData": {}
+		}
+	}
+```
+
+
+> Header fields
+
+| Identifier | Type | Description |
+|--- |--- |--- |
+| scope | number | 100 |
+| internal | boolean | true |
+| body | boolean | true |
+
+> Body fields
+
+| Identifier | Type | Description |
+|--- |--- |--- |
+| userData | object | The userData document |

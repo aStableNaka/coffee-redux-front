@@ -1,9 +1,9 @@
-import {ConfigSchema} from "./Config";
+import {ConfigSchema} from "../src/utils/Config";
 
 /**
  * Why is the config a ts file? because json files are boring
  */
-export let config:ConfigSchema = {
+export const config:ConfigSchema = {
 	
 	discord:{
 		token:"",
@@ -23,13 +23,16 @@ export let config:ConfigSchema = {
 		allowBots: false, // Enable to allow bots to use coffee
 	},
 
+	/**
+	 * Map<"Snowflake","Username">
+	 */
 	admins:new Map<string, string>([
-		["133169572923703296", "Naka"]
+		["DISCORD_USERID_SNOWFLAKE", "USER_NAME"]
 	]),
 
 	dispatch:{
 		token:"",
-		url:"",
+		endpoint:"",
 		timeout:1000
 	}
 

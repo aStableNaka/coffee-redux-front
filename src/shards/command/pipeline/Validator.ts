@@ -1,5 +1,6 @@
 import {CommandsSchema, ConfigSchema} from "../../../utils/config";
 import * as Discord from "discord.js";
+import { Capsule } from "./Capsule";
 
 
 /**
@@ -13,8 +14,14 @@ export class CommandValidator{
 		this.cmdConfig = config.commands;
 	}
 
-	validate( message: Discord.Message ){
-		
+	validate( capsule: Capsule ): Capsule{
+		const type = capsule.message.channel.type;
+		let channelName = "PM";
+		if(type=="text"){
+			channelName = (<Discord.TextChannel>(capsule.message.channel)).name;
+		}
+		console.log( `[ ${channelName} ] ${capsule.clean.username}: ${capsule.message.content}` );
+		return capsule;
 	}
 }
 

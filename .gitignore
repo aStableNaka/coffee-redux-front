@@ -1,0 +1,10 @@
+*.js
+tsconfig.json
+node_modules
+Live*
+live*
+gitify.sh
+notes
+.env
+build
+.vscode

@@ -4,26 +4,25 @@
   "description": "",
   "main": "Index.js",
   "scripts": {
-    
-    "clean": "rm -rf ./build",
-    "compile": "npm run clean && tsc --p ./",
-
-    "build-developer": "",
-    "build-release": "",
-
-    "start": "node ./build/src/Index.js",
-    "start-dev": "npm run compile && node ./build/src/Index.js",
-
-    "git": "start ./gitify.sh"
+    "start-dev": "echo - building, cleaning and starting && npm run build && npm run start",
+    "start": "echo - starting node runtime && cd build && node -r tsconfig-paths/register ./src/Index.js",
+    "clean": "echo - cleaning output directory && rm -rf ./build",
+    "compile": "echo - compiling source && npm run clean && tsc --p tsconfig.json --diagnostics",
+    "build": "echo - building && npm run compile && cp -f tsconfig.json build/tsconfig.json",
+    "git": "start ./gitify.sh",
+    "init": "echo - running full install and start procedure && npm i -D && start-dev"
   },
   "author": "Naka",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^14.11.2",
     "@types/ws": "^7.2.7",
-    "discord.js": "^12.3.1",
-    "sanitize": "^2.1.0",
+    "discord.js": "^12.3.1"
+  },
+  "devDependencies": {
+    "ts-loader": "^8.0.4",
     "tsc": "^1.20150623.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.0.3"
   }
 }

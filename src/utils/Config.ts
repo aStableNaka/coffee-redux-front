@@ -1,5 +1,6 @@
 export type PermIntFieldType = {name:string, n:number}
 export type InvLinkFieldType = {name:string, link:string}
+export type Snowflake = string;
 
 export type DiscordCfgSchema = {
 	token: string,
@@ -9,14 +10,19 @@ export type DiscordCfgSchema = {
 
 export type CommandsSchema = {
 	defaultPrefix: string,
-	superBlacklist: string[],
 	allowBots: boolean
+}
+
+export type UserSchema = {
+	permissionInts:PermIntFieldType[],
+	admins: AdminsSchema,
+	blacklist: Snowflake[],
 }
 
 /**
  * Map< "Snowflake", "Username" >
  */
-export type AdminsSchema = Map<string, string>
+export type AdminsSchema = Map<Snowflake, string>
 
 export type DispatchSchema = {
 	token:string | undefined,
@@ -26,7 +32,7 @@ export type DispatchSchema = {
 
 export type ConfigSchema = {
 	discord: DiscordCfgSchema,
-	commands: CommandsSchema,
-	admins: AdminsSchema,
+	command: CommandsSchema,
+	user: UserSchema,
 	dispatch: DispatchSchema
 }

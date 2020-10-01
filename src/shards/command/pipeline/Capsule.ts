@@ -1,6 +1,7 @@
 import { clear } from "console";
 import { Message } from "discord.js";
 import { ConfigSchema } from "../../../utils/Config";
+import * as Sanitize from "../../../utils/Sanitize";
 
 /**
  * The status of the capsule. If it passes the whole pipeline with all clears, it
@@ -12,6 +13,13 @@ export enum CapStat{
 	TERM
 }
 
+export type CleanRoom = {
+	message?: string;	// Sanitized
+	username?: string;	// Escaped
+}
+
+export type Check = (( capsule: Capsule )=>Capsule);
+
 /**
  * A capsule is like a toolbox for handling end-user input.
  * it performs high-level verifications. This is just things like
@@ -22,7 +30,9 @@ export class Capsule{
 	message: Message;
 	config: ConfigSchema;
 	status: CapStat = CapStat.CLEAR;
-	checks: (() => Capsule)[];
+	checkpoints: (() => Capsule)[];
+
+	clean: CleanRoom = {};
 
 	constructor( message: Message, config: ConfigSchema ){
 		this.config = config;
@@ -31,23 +41,35 @@ export class Capsule{
 		// I felt like it made more sense this way
 		// A series of checks. The capsule performs checks on itself. If it
 		// cannot be verified as a valid capsule, it will destroy itself.
-		this.checks = [
+		this.checkpoints = [
 			this.incubate,		// Look for prefix
 			this.sanitize,		// Remove unwanted characters
 			this.atomize		// Split message into component parts
 		];
+
+		this.performChecks();
 	}
 
 	performChecks(){
 		// TODO
 		// for each this.checks[x] -> a function that will only continue if
 		// self is not marked for termination
+		const self = this;
+		this.checkpoints.map(( f: ()=> Capsule )=>{
+			if( !this.isMarkedForDisposal ){
+				f.bind(self)();
+			}
+		}, this);
+	}
+
+	get isMarkedForDisposal(): boolean{
+		return this.status == CapStat.TERM;
 	}
 
 	/**
 	 * Mark the capsule for disposal.
 	 */
-	markForDisposal(){
+	markForDisposal(): void{
 		this.status = CapStat.TERM;
 	}
 
@@ -76,7 +98,6 @@ export class Capsule{
 	 */
 	incubateWithoutCustomPrefix(): Capsule{
 		const cont = this.message.content;
-		
 		// Simple prefix check
 		// Marks sell 
 		if( cont[0] != this.config.commands.defaultPrefix ){
@@ -90,6 +111,16 @@ export class Capsule{
 	 * "\@[0-9][a-zA-Z]"
 	 */
 	sanitize(): Capsule{
+
+		const msg = this.message;
+		const author = msg.author;
+
+		Object.assign(this.clean, {
+
+			message: Sanitize.text( msg.content ),
+			username: escape( author.username ),
+
+		});
 		return this;
 	}
 
@@ -100,24 +131,6 @@ export class Capsule{
 		// TODO
 		return this;
 	}
-
-	getIntent(): Capsule{
-		return 
-	}
-
-	/**
-	 * Make sure the command has a handler
-	 */
-	lookup(): Capsule{
-		// TODO
-		return this;
-	}
-
-	/**
-	 * Makes sure the user has permission to use this command
-	 */
-	checkPerms(): Capsule{
-		// TODO
-		return this;
-	}
 }
+
+export const Instance = Capsule;

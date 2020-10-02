@@ -100,7 +100,7 @@ export class Capsule{
 		const cont = this.message.content;
 		// Simple prefix check
 		// Marks sell 
-		if( cont[0] != this.config.commands.defaultPrefix ){
+		if( cont[0] != this.config.command.defaultPrefix ){
 			this.markForDisposal();
 		}
 		return this;

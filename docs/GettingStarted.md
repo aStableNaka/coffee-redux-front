@@ -18,4 +18,6 @@ If this is the first time you're running CF, use the command `npm run init` to s
 automatically build the bot.
 
 ## Windows
-Requires bash emulation. Use `cygwin` to emulate the bash commands necessary for initialization.
+The npm scripts require bash emulation. Use `cygwin` to emulate the bash commands necessary for building the executable code.
+
+> TODO steps for doing things manually

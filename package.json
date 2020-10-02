@@ -7,16 +7,17 @@
     "start-dev": "echo - building, cleaning and starting && npm run build && npm run start",
     "start": "echo - starting node runtime && cd build && node -r tsconfig-paths/register ./src/Index.js",
     "clean": "echo - cleaning output directory && rm -rf ./build",
-    "compile": "echo - compiling source && npm run clean && tsc --p tsconfig.json --diagnostics",
+    "compile": "echo - updating deps and compiling source && npm update && npm run clean && tsc --p tsconfig.json --diagnostics",
     "build": "echo - building && npm run compile && cp -f tsconfig.json build/tsconfig.json",
     "git": "start ./gitify.sh",
     "init": "echo - running full install and start procedure && npm i -D && start-dev"
   },
-  "author": "Naka",
+  "author": "astablenaka",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^14.11.2",
     "@types/ws": "^7.2.7",
+    "comfy": "github:astablenaka/comfy#master",
     "discord.js": "^12.3.1"
   },
   "devDependencies": {

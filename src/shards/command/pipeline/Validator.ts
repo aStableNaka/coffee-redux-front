@@ -11,7 +11,7 @@ export class CommandValidator{
 	cmdConfig: CommandsSchema;
 
 	constructor( config: ConfigSchema ){
-		this.cmdConfig = config.commands;
+		this.cmdConfig = config.command;
 	}
 
 	validate( capsule: Capsule ): Capsule{

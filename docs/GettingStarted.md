@@ -11,7 +11,10 @@ locate the `Provider.ts` file under `./config/Provider.ts`
 
 Once you have located `Provider.ts`, follow the rest of the guide to help you fill in the values.
 
-# Running a Coffee-front instance
+# Building
+After configurating coffee, you need to build it.
+
+# Express install
 
 ## Bash
 If this is the first time you're running CF, use the command `npm run init` to setup the deps and

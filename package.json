@@ -10,7 +10,7 @@
     "compile": "echo - updating deps and compiling source && npm update && npm run clean && tsc --p tsconfig.json --diagnostics",
     "build": "echo - building && npm run compile && cp -f tsconfig.json build/tsconfig.json",
     "git": "start ./gitify.sh",
-    "init": "echo - running full install and start procedure && npm i -D && start-dev"
+    "init": "echo - running full install and start procedure && npm i -D && npm run start-dev"
   },
   "author": "astablenaka",
   "license": "ISC",

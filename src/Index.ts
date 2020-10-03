@@ -1,7 +1,7 @@
 import * as Discord from "discord.js";
 import {config} from "@config/Provider";
 
-export class Dispatch{
+export class Head{
 	manager: Discord.ShardingManager;
 	constructor(){
 		const self = this;
@@ -16,7 +16,7 @@ export class Dispatch{
 
 
 		this.manager.on('shardCreate', (shard)=>{
-			console.log( `A new shard has been spawned.\n[ ID ]: ${shard.id}\nCurrently managing ${manager.shards.size} shards` );
+			console.log( `A new shard has been spawned.\n[ ID ]: ${shard.id}\nCurrently managing ${self.manager.shards.size} shards` );
 		
 			shard.on("death", ()=>{
 				console.warn(`[ DEATH ] Shard ${shard.id} has died.`);
@@ -63,8 +63,4 @@ export class Dispatch{
 	}
 }
 
-
-
-
-
-
+const a = new Head();

@@ -1,4 +1,4 @@
-import {CommandsSchema, ConfigSchema} from "../../../utils/config";
+import {CommandsSchema, ConfigSchema} from "../../../utils/Config";
 import * as Discord from "discord.js";
 import { Capsule } from "./Capsule";
 
